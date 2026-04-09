@@ -27,30 +27,30 @@ class MyApp extends StatelessWidget {
           child: Column(children: [
             
             HeaderWidget(name: "Alamahul Bayan", level: 2306163, role:"Dev"),
-              SizedBox(height: 6,),
-              Row(
-                spacing: 10,
-                children: [        
+            SizedBox(height: 6,),
+            Row(
+              spacing: 10,
+              children: [        
                   ChipsWidget(color: Colors.red, icon: Icons.favorite, label: "Skills", value: "Weng Dev", bg: Colors.black),
                   ChipsWidget(color: Colors.yellow, icon: Icons.start, label: "Status", value: "Student", bg: Colors.red),
                   ChipsWidget(color: Colors.blue, icon: Icons.numbers, label: "Semester", value: "6", bg: Colors.yellow)
                 ]
 
             ),
+            SizedBox(height: 8,),
             Text("Quest List"),
-            QuestWidget()
-          ],
+            SizedBox(height: 8,),
+            Column(
+              spacing: 10,
+              children: [
+              QuestWidget(quest: "Bug fixing", cost: "Rp. 500.000", icon: Icons.task_alt, textColor: Colors.black38,),
+              QuestWidget(quest: "Programming", cost: "Rp. 500.000", icon: Icons.task_alt, textColor: Colors.black38),
+              QuestWidget(quest: "Design Database", cost: "Rp. 1.000.000", icon: Icons.task_alt, textColor: Colors.black38)
+
+              ],
+            )
+            ],
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.warning), label: "About"),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.arrow_back),
-              label: "back",
-            ),
-          ],
         ),
       ),
     );

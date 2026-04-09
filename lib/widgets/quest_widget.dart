@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
 class QuestWidget extends StatelessWidget {
-  const QuestWidget({super.key});
+    final String quest;
+    final String cost;
+    final Color textColor;
+    final IconData icon;
+
+    const QuestWidget({super.key, required this.quest, required this.cost, required this.textColor, required this.icon});
 
   @override
+
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        
+
       },
       borderRadius: BorderRadius.circular(14),
       child: Ink(
@@ -33,15 +39,15 @@ class QuestWidget extends StatelessWidget {
                   color: Colors.purpleAccent.withAlpha(12),
                   borderRadius: BorderRadius.circular(12)
                 ),
-                child: Icon(Icons.task_alt, color: Colors.purpleAccent),
+                child: Icon(icon, color: Colors.purpleAccent),
               ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: .start,
                   children: [
-                    Text("Programming", style: TextStyle(color: Colors.red),),
+                    Text(quest, style: TextStyle(color: textColor),),
                     SizedBox(height: 2,),
-                    Text("Cost: 50 dolar")
+                    Text(cost)
                   ],
                 )
               )
