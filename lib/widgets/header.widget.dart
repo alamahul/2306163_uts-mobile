@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class HeaderWidget  extends StatelessWidget {
   final String name;
   final String role;
   final int level;
+  final String rank;
 
 
-  const HeaderWidget ({super.key, required this.name, required this.role, required this.level});
+  const HeaderWidget ({super.key, required this.name, required this.role, required this.level, required this.rank});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +80,20 @@ class HeaderWidget  extends StatelessWidget {
                 ],
               ) 
             ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.blue.withAlpha(32),
+                borderRadius: BorderRadius.circular(4)
+              ),
+              child: Text(rank, style: GoogleFonts.bubblegumSans(
+                textStyle: TextStyle(
+                  color: Colors.red,
+                  fontSize: 36,
+                  fontWeight: .bold
+                )
+              ),),
+            )
         ],
       ),
     );
