@@ -11,162 +11,145 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _levelController = TextEditingController();
-  final TextEditingController _rankController = TextEditingController();
-  final TextEditingController _jobController = TextEditingController();
+  final TextEditingController _skillController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Form(
-          
-          key: _formKey,
-          child: Column(
-            children: [
-              Text("Login"),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextFormField(
-                  
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    
-                    hint: Text("Masukan Nama..."),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                    ),
-                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 2)
-                    ), errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.redAccent, width: 2)
-                    ), focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red, width: 2)
-                    
+      backgroundColor: const Color(0xFFF5F7FA),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Icon(Icons.work_outline, size: 64, color: Colors.blueAccent),
+                  const SizedBox(height: 16),
+                  const Text(
+                    "FreelanceHub",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Nama harus di isi";
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextFormField(
-                  
-                  controller: _levelController,
-                  decoration: InputDecoration(
-                    
-                    hint: Text("Masukan Level..."),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                    ),
-                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 2)
-                    ), errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.redAccent, width: 2)
-                    ), focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red, width: 2)
-                    
+                  const SizedBox(height: 8),
+                  const Text(
+                    "Find the best freelance projects",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "level harus di isi";
-                    } 
-                    // if (value is! int) {
-                    //   return "level harus nomber";
-                    // }
-                    
-                    return null;
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextFormField(
-                  
-                  controller: _rankController,
-                  decoration: InputDecoration(
-                    
-                    hint: Text("Masukan Rank..."),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
+                  const SizedBox(height: 32),
+                  _buildTextField(
+                    controller: _nameController,
+                    hint: "Nama",
+                    icon: Icons.person_outline,
+                    validatorText: "Nama harus diisi",
+                  ),
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: _passwordController,
+                    hint: "Password",
+                    icon: Icons.lock_outline,
+                    isPassword: true,
+                    validatorText: "Password harus diisi",
+                  ),
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: _levelController,
+                    hint: "Experience Level (e.g. 2)",
+                    icon: Icons.star_border,
+                    validatorText: "Experience Level harus diisi",
+                  ),
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: _skillController,
+                    hint: "Skill Freelancer (e.g. Frontend Developer)",
+                    icon: Icons.code,
+                    validatorText: "Skill harus diisi",
+                  ),
+                  const SizedBox(height: 32),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
                     ),
-                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 2)
-                    ), errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.redAccent, width: 2)
-                    ), focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red, width: 2)
-                    
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.pushReplacementNamed(context, "/", arguments: {
+                          "name": _nameController.text,
+                          "password": _passwordController.text,
+                          "level": _levelController.text,
+                          "skill": _skillController.text,
+                        });
+                      }
+                    },
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Rank harus di isi";
-                    }
-                    return null;
-                  },
-                ),
+                ],
               ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextFormField(
-                  
-                  controller: _jobController,
-                  decoration: InputDecoration(
-                    
-                    hint: Text("Masukan Job..."),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                    ),
-                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 2)
-                    ), errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.redAccent, width: 2)
-                    ), focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red, width: 2)
-                    
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Job harus di isi";
-                    }
-
-                   
-
-                    return null;
-                  },
-                ),
-              ),
-        
-              SizedBox(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.pushReplacementNamed(context, "/", arguments: {
-                        "name" : _nameController.text,
-                        "level" : _levelController.text,
-                        "rank" : _rankController.text,
-                        "job" : _jobController.text,
-                      });
-                    }
-                  },
-                  child: Text("Login"),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
-     
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hint,
+    required IconData icon,
+    required String validatorText,
+    bool isPassword = false,
+  }) {
+    return TextFormField(
+      controller: controller,
+      obscureText: isPassword,
+      decoration: InputDecoration(
+        hintText: hint,
+        prefixIcon: Icon(icon, color: Colors.grey),
+        filled: true,
+        fillColor: Colors.white,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.redAccent, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return validatorText;
+        }
+        return null;
+      },
     );
   }
 }

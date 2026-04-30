@@ -1,101 +1,118 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-
-class HeaderWidget  extends StatelessWidget {
+class HeaderWidget extends StatelessWidget {
   final String name;
-  final String role;
-  final int level;
-  final String rank;
+  final String skill;
+  final String level;
 
-
-  const HeaderWidget ({super.key, required this.name, required this.role, required this.level, required this.rank});
+  const HeaderWidget({
+    super.key,
+    required this.name,
+    required this.skill,
+    required this.level,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-       gradient: LinearGradient(
-        colors: [
-          Colors.green,
-          Colors.greenAccent,
-        ],
-        begin: .topStart,
-        end: .bottomEnd
-       ),
-       borderRadius: BorderRadius.circular(16)
+        gradient: const LinearGradient(
+          colors: [
+            Colors.blueAccent,
+            Colors.lightBlueAccent,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blueAccent.withAlpha(50),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          )
+        ]
       ),
-      padding: EdgeInsets.all(34),
+      padding: const EdgeInsets.all(20),
       child: Row(
         children: [
-            Stack(
-              children: [
-                
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage("https://media.istockphoto.com/id/2228661068/photo/isolated-google-logo-symbolizing-internet-search-and-technology.webp?a=1&b=1&s=612x612&w=0&k=20&c=711C2QCJ2SLkaDr9rZJm3l1TJlqErNAnS3fe0rgcRIg="),
+          Stack(
+            children: [
+              const CircleAvatar(
+                radius: 40,
+                backgroundImage: NetworkImage(
+                  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200",
                 ),
-                Positioned(
-                  right: 3,
-                  bottom: 0,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(99),
-                      color: Colors.blue
-                    ),
-                    child: Text("Google", style: TextStyle(
+              ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: Colors.greenAccent,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: 12,
+                  ),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Welcome Back,",
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "$skill | Lvl $level",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withAlpha(50),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: const Text(
+                    "Freelancer",
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: .bold,
-                    )),
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 )
               ],
             ),
-            SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: .start,
-                children: [
-                  Text(name, style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: .bold,
-                    fontSize: 18,
-                    backgroundColor: Colors.amberAccent
-                  ),
-                  
-                  ),
-                  Text("$level - $role", style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: .bold,
-                    fontSize: 15,
-                    backgroundColor: Colors.redAccent
-                  ),),
-                ],
-              ) 
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.blue.withAlpha(32),
-                borderRadius: BorderRadius.circular(4)
-              ),
-              child: Text(rank, style: GoogleFonts.bubblegumSans(
-                textStyle: TextStyle(
-                  color: Colors.red,
-                  fontSize: 36,
-                  fontWeight: .bold
-                )
-              ),),
-            )
+          ),
         ],
       ),
     );
   }
-}
+}
