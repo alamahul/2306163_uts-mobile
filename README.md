@@ -4,30 +4,35 @@ FreelanceHub adalah aplikasi seluler berbasis Flutter yang dirancang untuk memba
 
 ## 🚀 Fitur Utama
 
-- **Login Interaktif**: Pengguna dapat masuk dengan memasukkan Nama, Password, Experience Level, dan Skill Freelancer.
-- **Modern Dashboard**: 
-  - **Header Profil**: Menampilkan sapaan dinamis beserta informasi level dan skill.
+- **Login Interaktif & Validasi Ketat**: 
+  - Validasi formulir secara spesifik: Nama wajib diisi, Password minimal 8 karakter, Experience Level wajib berupa angka, dan Skill wajib berupa alfabet.
+- **Navigasi Bawah (Bottom Navigation Bar)**: 
+  - Navigasi mulus yang membagi aplikasi ke dalam 3 tab utama: **Home**, **My Jobs**, dan **Profile**.
+- **Modern Dashboard (Home)**: 
+  - **Header Profil**: Menampilkan sapaan dinamis, informasi level, dan ikon *skill* yang otomatis menyesuaikan dengan keahlian yang diinputkan.
   - **Progress Bar**: Memantau progres pekerjaan yang sudah diambil dari total job yang tersedia.
-- **Pencarian dan Filter Cerdas**:
-  - **Search Bar**: Mencari project freelance spesifik berdasarkan judul (title).
-  - **Skill Filter**: Chip filter horizontal untuk menyeleksi project berdasarkan keahlian (Frontend, Backend, UI/UX, Mobile, dll).
-- **List Job Interaktif**: Menampilkan daftar project yang dilengkapi ikon status, nama klien, bayaran, serta badge tingkat kesulitan (Easy, Medium, Hard).
+  - **Pencarian dan Filter Cerdas**: Mencari project menggunakan *Search Bar* atau *Chip Filter* (Frontend, Backend, UI/UX, Mobile).
+  - **Pagination (Load More)**: Mendukung pemuatan data secara bertahap untuk menjaga performa aplikasi.
+- **List Job Interaktif & Cerdas**: 
+  - Menampilkan 50 data dummy project yang sangat bervariasi dengan nama klien, bayaran (dilengkapi ikon monetisasi), serta tingkat kesulitan.
+  - **Sistem Rekomendasi Level**: Setiap *card* menampilkan *Requirement Level* (contoh: Lvl 2+) dan pesan rekomendasi cerdas (Apakah project tersebut cocok untuk level user atau terlalu sulit).
+  - **Sinkronisasi Favorite**: Ikon hati (Love) akan tersinkronisasi dan muncul di *card* depan jika project ditandai sebagai favorit dari halaman detail.
 - **Halaman Detail & Take Project**:
-  - Menampilkan deskripsi detail, klien, dan bayaran dari sebuah project.
-  - Terdapat tombol **"Take Project"** yang dilengkapi dengan animasi ketika ditekan.
-  - Fitur **Favorite Toggle** untuk menandai project idaman.
-  - Menggunakan **Hero Animation** untuk transisi gambar yang halus dari daftar project ke halaman detail.
-- **Logout System**: Fitur logout untuk menghapus sesi dan kembali ke halaman utama.
+  - Menggunakan **Hero Animation** untuk transisi gambar yang sangat halus.
+  - Terdapat tombol **"Take Project"** dengan animasi *scale* yang responsif.
+  - Jika project sudah diambil, halamannya tetap bisa diakses dengan indikator visual *overlay* "Taken" yang jelas.
+- **My Jobs**: Tab khusus untuk memantau project aktif yang telah berhasil diambil, dilengkapi dengan sistem *pagination*.
+- **Halaman Profile**:
+  - **Account Settings**: Pengguna dapat mengubah Nama, Level, dan Skill melalui *pop-up form*, dan perubahannya akan langsung memengaruhi *Header* secara *real-time*.
+  - **Payment Methods**: Menu *Bottom Sheet* untuk memantau metode pembayaran.
+  - **Help & Support**: Panduan tata cara menggunakan aplikasi.
+  - **Logout**: Tombol *Log Out* untuk keluar dan kembali ke halaman Login.
 
 ## 💻 Teknologi yang Digunakan
 
 - **Framework**: [Flutter](https://flutter.dev/) (Dart)
-- **Komponen UI**: Material Design 3, Hero Animations, Animations Controller.
-- **State Management**: Stateful & Stateless Widgets standar bawaan Flutter.
-
-## 📱 Cuplikan Layar (Screenshots)
-
-*(Tangkapan layar dapat ditambahkan di sini nantinya untuk menunjukkan UI aplikasi seperti Halaman Login, Dashboard, dan Halaman Detail).*
+- **Komponen UI**: Material Design 3, Hero Animations, Animations Controller, BottomNavigationBar, BottomSheet.
+- **State Management**: Stateful & Stateless Widgets standar bawaan Flutter (Penggunaan ekstensif `setState` untuk re-render dan *routing args*).
 
 ## 🛠️ Cara Menjalankan Proyek
 

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.itg_mobile_pertemuan_4"
+    namespace = "com.example.uts_mobile"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.itg_mobile_pertemuan_4"
+        applicationId = "com.example.uts_mobile"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

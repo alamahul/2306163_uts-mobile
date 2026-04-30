@@ -54,7 +54,12 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _nameController,
                     hint: "Nama",
                     icon: Icons.person_outline,
-                    validatorText: "Nama harus diisi",
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Nama tidak boleh kosong";
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
                   _buildTextField(
@@ -62,21 +67,48 @@ class _LoginPageState extends State<LoginPage> {
                     hint: "Password",
                     icon: Icons.lock_outline,
                     isPassword: true,
-                    validatorText: "Password harus diisi",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Password tidak boleh kosong";
+                      }
+                      if (value.length < 8) {
+                        return "Password minimal terdiri dari 8 karakter";
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
                   _buildTextField(
                     controller: _levelController,
                     hint: "Experience Level (e.g. 2)",
                     icon: Icons.star_border,
-                    validatorText: "Experience Level harus diisi",
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Experience Level tidak boleh kosong";
+                      }
+                      if (!RegExp(r'^\d+$').hasMatch(value.trim())) {
+                        return "Experience Level hanya boleh diisi angka";
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
                   _buildTextField(
                     controller: _skillController,
                     hint: "Skill Freelancer (e.g. Frontend Developer)",
                     icon: Icons.code,
-                    validatorText: "Skill harus diisi",
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Skill Freelancer tidak boleh kosong";
+                      }
+                      // Hanya membolehkan huruf, spasi, dan tanda baca umum (seperti / atau - untuk UI/UX)
+                      // Tidak boleh mengandung angka
+                      if (RegExp(r'\d').hasMatch(value)) {
+                        return "Skill Freelancer hanya boleh diisi huruf (bukan angka)";
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 32),
                   ElevatedButton(
@@ -116,12 +148,14 @@ class _LoginPageState extends State<LoginPage> {
     required TextEditingController controller,
     required String hint,
     required IconData icon,
-    required String validatorText,
+    required String? Function(String?) validator,
     bool isPassword = false,
+    TextInputType? keyboardType,
   }) {
     return TextFormField(
       controller: controller,
       obscureText: isPassword,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hint,
         prefixIcon: Icon(icon, color: Colors.grey),
@@ -144,12 +178,7 @@ class _LoginPageState extends State<LoginPage> {
           borderSide: const BorderSide(color: Colors.red, width: 2),
         ),
       ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return validatorText;
-        }
-        return null;
-      },
+      validator: validator,
     );
   }
 }

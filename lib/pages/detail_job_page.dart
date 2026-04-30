@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class DetailJobPage extends StatefulWidget {
   final Map<String, dynamic> job;
+  final int userLevel;
 
-  const DetailJobPage({super.key, required this.job});
+  const DetailJobPage({super.key, required this.job, required this.userLevel});
 
   @override
   State<DetailJobPage> createState() => _DetailJobPageState();
@@ -64,6 +65,9 @@ class _DetailJobPageState extends State<DetailJobPage> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     final job = widget.job;
+    bool isTaken = job['isTaken'] ?? false;
+    int reqLevel = job['reqLevel'] ?? 1;
+    bool isRecommended = widget.userLevel >= reqLevel;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -81,6 +85,7 @@ class _DetailJobPageState extends State<DetailJobPage> with SingleTickerProvider
             onPressed: () {
               setState(() {
                 _isFavorite = !_isFavorite;
+                widget.job['isFavorite'] = _isFavorite;
               });
             },
           )
@@ -101,6 +106,24 @@ class _DetailJobPageState extends State<DetailJobPage> with SingleTickerProvider
                     fit: BoxFit.cover,
                   ),
                 ),
+                child: isTaken
+                    ? Container(
+                        color: Colors.black.withAlpha(100),
+                        child: const Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.check_circle, color: Colors.greenAccent, size: 32),
+                              SizedBox(width: 8),
+                              Text(
+                                "Taken",
+                                style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : null,
               ),
             ),
             Padding(
@@ -111,28 +134,54 @@ class _DetailJobPageState extends State<DetailJobPage> with SingleTickerProvider
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: _getDifficultyColor(job['difficulty']).withAlpha(30),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          job['difficulty'],
-                          style: TextStyle(
-                            color: _getDifficultyColor(job['difficulty']),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: _getDifficultyColor(job['difficulty']).withAlpha(30),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              job['difficulty'],
+                              style: TextStyle(
+                                color: _getDifficultyColor(job['difficulty']),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent.withAlpha(30),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              "Level $reqLevel+",
+                              style: const TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        job['payment'],
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
+                      Row(
+                        children: [
+                          const Icon(Icons.monetization_on, color: Colors.green, size: 24),
+                          const SizedBox(width: 4),
+                          Text(
+                            job['payment'],
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   ),
@@ -158,6 +207,38 @@ class _DetailJobPageState extends State<DetailJobPage> with SingleTickerProvider
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: isRecommended ? Colors.blue.withAlpha(20) : Colors.orange.withAlpha(20),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: isRecommended ? Colors.blue.withAlpha(50) : Colors.orange.withAlpha(50),
+                      )
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          isRecommended ? Icons.thumb_up : Icons.warning_amber_rounded,
+                          color: isRecommended ? Colors.blue : Colors.orange,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            isRecommended 
+                              ? "Rekomendasi untuk Anda: Level Anda (${widget.userLevel}) memenuhi syarat minimal (Level $reqLevel)."
+                              : "Perhatian: Level Anda (${widget.userLevel}) di bawah syarat minimal (Level $reqLevel). Project ini mungkin terlalu sulit.",
+                            style: TextStyle(
+                              color: isRecommended ? Colors.blue.shade700 : Colors.orange.shade700,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 24),
                   const Text(
@@ -202,14 +283,14 @@ class _DetailJobPageState extends State<DetailJobPage> with SingleTickerProvider
             child: child,
           ),
           child: ElevatedButton(
-            onPressed: job['isTaken'] ? null : _handleTakeProject,
+            onPressed: isTaken ? null : _handleTakeProject,
             style: ElevatedButton.styleFrom(
-              backgroundColor: job['isTaken'] ? Colors.grey : Colors.blueAccent,
+              backgroundColor: isTaken ? Colors.green : Colors.blueAccent,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              elevation: job['isTaken'] ? 0 : 5,
+              elevation: isTaken ? 0 : 5,
             ),
             child: _isTaking 
                 ? const SizedBox(
@@ -218,7 +299,7 @@ class _DetailJobPageState extends State<DetailJobPage> with SingleTickerProvider
                     child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                   )
                 : Text(
-                    job['isTaken'] ? "Project Already Taken" : "Take Project",
+                    isTaken ? "✓ Anda Telah Mengambil Project Ini" : "Take Project",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
